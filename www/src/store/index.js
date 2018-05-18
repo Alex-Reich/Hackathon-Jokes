@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 var api=axios.create({
-  baseURL:'https://bcw-gregslist.herokuapp.com/api/', // EDIT THIS
+  baseURL:'http://localhost:3000/api/', // EDIT THIS
   timeout: 3000
 })
 
@@ -16,9 +16,29 @@ export default new vuex.Store({
     posts:[]
   },
   mutations:{
-    
+    setUser(state, user){
+      state.user=user
+    }
   },
   actions:{
+    getUsers({dispatch, commit}, user){
+      console.log(user)
+      api.get('users/' + user)
+      .then(res=>{
+        console.log(res)
+        commit('setUser', res.data)
+      })
+    },
+    addUser({dispatch, commit}, user){
+     console.log(user)
+      api.post('users', user)
+      .then(res=>{
+        dispatch('setUser',)
+        console.log('user added')
+      })
+    }
 
+
+  
   }
 })
