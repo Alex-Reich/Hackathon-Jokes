@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
+var ObjectId=Schema.Types.ObjectId
 var schemaName = 'Post'
 
 var schema = new Schema({
@@ -14,14 +15,21 @@ var schema = new Schema({
     imgUrl: {
         type: 'string',
     },
-    author: {
+    user: {
         type: 'string',
         required: true
     },
     rating: {
         type: 'number',
         required: true
+    },
+    
+    // relationship
+    userId: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
     }
 })
-
+    
 module.exports = mongoose.model(schemaName, schema)
