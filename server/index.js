@@ -17,8 +17,11 @@ app.use(bp.urlencoded({extended: true}))
 // code above will never change
 
 // routes
+var users = require('./server-assets/routes/users')
+var posts = require('./server-assets/routes/posts')
 
-
+app.use(users.router)
+app.use(posts.router)
 
 
 // catch all

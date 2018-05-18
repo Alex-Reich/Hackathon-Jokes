@@ -1,6 +1,6 @@
 var router = require('express').Router()
 var Users = require('../models/user')
-
+var users = []
 // Get all
 router.get('/api/users', (req, res, next)=>{
     Users.find(req.query)
