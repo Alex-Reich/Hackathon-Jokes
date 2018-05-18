@@ -19,10 +19,14 @@ app.use(bp.urlencoded({extended: true}))
 // routes
 var users = require('./server-assets/routes/users')
 var posts = require('./server-assets/routes/posts')
+var comments = require('./server-assets/routes/comments')
+var subcomments = require('./server-assets/routes/subcomments')
+
 
 app.use(users.router)
 app.use(posts.router)
-
+app.use(comments.router)
+app.use(subcomments.router)
 
 // catch all
 app.get('*', (req, res, next)=>{
