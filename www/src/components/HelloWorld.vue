@@ -25,7 +25,7 @@
       <h1>Hello, {{user.name}}</h1>
     </div>
     <div>
-      <button @click="postForm=1">Create Post</button>
+      <button v-if="showLogin==1" @click="postForm=1">Create Post</button>
       <div v-if="postForm==1">
         <form v-on:submit.prevent="addPost">
           <input type="text" name="title" placeholder="title" v-model="post.title" required>
@@ -63,9 +63,9 @@
           title: '',
           body: '',
           imgUrl: '',
-          user: this.user.name,
+          user: 0,
           rating: 0,
-          parentId: this.user._id
+          parentId: 0
         }
       }
     },
