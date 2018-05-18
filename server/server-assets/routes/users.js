@@ -22,8 +22,8 @@ router.get('/api/users/:id', (req, res, next)=>{
         })
 })
 
-router.get('/api/users/:name', (req, res, next)=>{
-    Users.find(req.params.name)
+router.get('/api/users/byname/:name', (req, res, next)=>{
+    Users.find({name: req.params.name})
     .then(users=>{
         res.status(200).send(users)
     })
