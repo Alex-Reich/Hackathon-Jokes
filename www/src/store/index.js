@@ -12,10 +12,11 @@ vue.use(vuex)
 
 export default new vuex.Store({
   state:{
-
+    user:{},
+    posts:[]
   },
   mutations:{
-
+    
   },
   actions:{
 
