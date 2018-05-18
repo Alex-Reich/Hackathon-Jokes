@@ -6,11 +6,11 @@ var schemaName = 'Post'
 var schema = new Schema({
     title: {
         type: 'string',
-        required: true,
+       required: true,
     },
     body: {
         type: 'string',
-        required: true,
+       required: true,
     },
     imgUrl: {
         type: 'string',
@@ -21,14 +21,13 @@ var schema = new Schema({
     },
     rating: {
         type: 'number',
-        required: true
     },
-    
+
     // relationship
     userId: {
         type: ObjectId,
         ref: 'User',
-        required: true
+        //required: true
     }
 })
     

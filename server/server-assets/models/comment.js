@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-var ObjectId=Schema.Types.ObjectId
+var ObjectId = Schema.Types.ObjectId
 var schemaName = 'Comment'
 
 var schema = new Schema({
@@ -17,20 +17,19 @@ var schema = new Schema({
     },
     rating: {
         type: 'number',
-        required: true
     },
-    
+
     // relationship
     userId: {
         type: ObjectId,
         ref: 'User',
-        required: true
+        //required: true
     },
-postId: {
-    type: ObjectId,
-    ref: 'Post',
-    required: true
-}
+    postId: {
+        type: ObjectId,
+        ref: 'Post',
+        //required: true
+    }
 })
-    
+
 module.exports = mongoose.model(schemaName, schema)

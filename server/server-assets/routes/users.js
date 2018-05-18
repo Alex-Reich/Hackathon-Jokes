@@ -22,6 +22,16 @@ router.get('/api/users/:id', (req, res, next)=>{
         })
 })
 
+router.get('/api/users/:name', (req, res, next)=>{
+    Users.find(req.params.name)
+    .then(users=>{
+        res.status(200).send(users)
+    })
+        .catch(err =>{
+            res.status(400).send(err)
+        })
+})
+
 router.post('/api/users', (req, res, next)=>{
     var user = req.body
     Users.create(user)

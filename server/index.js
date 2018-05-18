@@ -26,7 +26,7 @@ var subcomments = require('./server-assets/routes/subcomments')
 app.use(users.router)
 app.use(posts.router)
 app.use(comments.router)
-
+app.use(subcomments.router)
 
 // catch all
 app.get('*', (req, res, next)=>{

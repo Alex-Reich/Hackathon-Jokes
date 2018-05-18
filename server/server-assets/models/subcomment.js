@@ -17,7 +17,6 @@ var schema = new Schema({
     },
     rating: {
         type: 'number',
-        required: true
     },
 
     // relationship
