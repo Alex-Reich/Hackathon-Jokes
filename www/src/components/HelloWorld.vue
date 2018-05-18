@@ -1,6 +1,27 @@
 <template>
-  <div class="hello">
+  <div>
+    <!-- The following is for the sign in sign up -->
+    <div class="login" v-if="showLogin==0">
+      <button @click="sForm=1">Sign In</button>
+      <button @click="sForm=2">Sign Up</button>
+      <div v-if="sForm==1">
+        <form v-on:submit.prevent="">
+          <input type="text" name="userName" placeholder="Enter User Name">
+          <button @click="showLogin=1" type="submit">Submit</button>
+        </form>
+      </div>
+      <div v-if="sForm==2">
+          <form v-on:submit.prevent="">
+            <input type="text" name="userName" placeholder="Select User Name">
+            <button @click="showLogin=1" type="submit">Submit</button>
+          </form>
+        </div>
+    </div>
+    <!-- End of sign in sign up code -->
+    <div class="post" v-if="showLogin==1">
+        <button @click="showLogin=0">Logout</button>
 
+    </div>
   </div>
 </template>
 
@@ -9,7 +30,8 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      showLogin: 0,
+      sForm: 0
     }
   }
 }
