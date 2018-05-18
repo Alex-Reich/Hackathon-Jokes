@@ -17,14 +17,14 @@ var schema = new Schema({
     },
     user: {
         type: 'string',
-        required: true
+       //required: true
     },
     rating: {
         type: 'number',
     },
 
     // relationship
-    userId: {
+    parentId: {
         type: ObjectId,
         ref: 'User',
         //required: true
