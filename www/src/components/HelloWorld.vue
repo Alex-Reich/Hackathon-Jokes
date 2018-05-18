@@ -24,6 +24,16 @@
       <button @click="showLogin=0">Logout</button>
       <h1>Hello, {{user.name}}</h1>
     </div>
+    <div v-if="showLogin==1">
+      <div class="post" v-for="post in posts">
+        <img :src="post.imgUrl" alt="">
+        <h2>{{post.title}}</h2>
+        <p>{{post.body}}</p>
+
+
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,7 +51,7 @@
       }
     },
     mounted() {
-      // this.$store.dispatch('getPosts')
+      this.$store.dispatch('getPosts')
     },
     computed: {
       posts() {
