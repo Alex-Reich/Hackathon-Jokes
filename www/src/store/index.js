@@ -69,7 +69,10 @@ export default new vuex.Store({
     getPosts({dispatch, commit}){
       api.get('posts')
       .then(res=>{
-        commit('setPosts', res.data)
+        var sort=res.data.sort(function(a,b){
+          return b.rating-a.rating
+        })
+        commit('setPosts', sort)
       })
     },
     addPost({dispatch, commit}, post){
@@ -132,6 +135,10 @@ export default new vuex.Store({
             }
             commentObj[com.parentId].push(com)
           })
+          var arr = commentObj[Object.keys(commentObj)[0]]
+          var sort=arr.sort(function(a,b){
+            return b.rating-a.rating})
+          arr=sort
           commit('setComments', commentObj)
         })
     },
@@ -158,6 +165,10 @@ export default new vuex.Store({
             }
             subCommentObj[com.parentId].push(com)
           })
+          var arr = subCommentObj[Object.keys(subCommentObj)[0]]
+          var sort=arr.sort(function(a,b){
+            return b.rating-a.rating})
+          arr=sort
           commit('setSubComments', subCommentObj)
         })
     },
