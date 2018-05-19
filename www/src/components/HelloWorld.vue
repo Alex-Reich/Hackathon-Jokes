@@ -56,7 +56,8 @@
         showLogin: 0,
         sForm: 0,
         postForm: 0,
-        user: {
+        activeUser: {},
+        tuser: {
           name: ''
         },
         post: {
@@ -71,19 +72,24 @@
     },
     mounted() {
       this.$store.dispatch('getPosts')
+      this.$store.dispatch('getUsers')
     },
     computed: {
       posts() {
         return this.$store.state.posts
+      },
+      user(){
+        return this.$store.state.user
       }
     },
     methods: {
       addUser() {
-        this.$store.dispatch('addUser', this.user)
+        this.activeUser = this.tuser
+        this.$store.dispatch('addUser', this.tuser)
       },
       getUser() {
-        // this.activeUser = this.user
-        this.$store.dispatch('getUsers', this.user)
+        this.activeUser = this.tuser
+        this.$store.dispatch('getUser', this.tuser)
       },
       addPost() {
         this.$store.dispatch('addPost', this.post)
