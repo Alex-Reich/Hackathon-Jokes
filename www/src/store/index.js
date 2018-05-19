@@ -84,6 +84,42 @@ export default new vuex.Store({
         dispatch('getPosts')
       })
     },
+    votePostUp({dispatch,commit},post){
+      api.put('posts/'+post._id, post)
+        .then(res=>{
+          dispatch('getPosts')
+        })
+    },
+    votePostDown({dispatch, commit}, post){
+      api.put('posts/'+post._id, post)
+      .then(res=>{
+        dispatch('getPosts')
+      })
+    },
+    voteCommentUp({dispatch,commit},comment){
+      api.put('comments/'+comment._id, comment)
+        .then(res=>{
+          dispatch('getComments')
+        })
+    },
+    voteCommentDown({dispatch, commit}, comment){
+      api.put('comments/'+comment._id, comment)
+      .then(res=>{
+        dispatch('getComments')
+      })
+    },
+    voteSubCommentUp({dispatch,commit},subComment){
+      api.put('subComments/'+subComment._id, subComment)
+        .then(res=>{
+          dispatch('getSubComments')
+        })
+    },
+    voteSubCommentDown({dispatch, commit}, subComment){
+      api.put('subComments/'+subComment._id, subComment)
+      .then(res=>{
+        dispatch('getSubComments')
+      })
+    },
 
     //COMMENTS
     getComments({dispatch,  commit}){

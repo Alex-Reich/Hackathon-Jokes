@@ -5,9 +5,11 @@
       <h2>{{post.title}}</h2>
       <p>{{post.body}}</p>
       <p>Posted by {{post.user}}</p>
+      <p>Rating: {{post.rating}}</p>
       <button v-if="post.parentId==user._id" @click="deletePost(post)" type="delete">Delete</button>
       <button @click="commentForm=post.parentId">Comment</button>
-      <button>Vote UP</button>
+      <button @click="votePostUp(post)">Vote UP</button>
+      <button @click="votePostDown(post)">Vote DOWN</button>
     </div>
     <div v-if="commentForm==post.parentId">
       <input type="text" name="body" placeholder="body" v-model="comment.body" required>
@@ -56,6 +58,14 @@
       },
       deletePost(post) {
         this.$store.dispatch('deletePost', post)
+      },
+      votePostUp(post){
+        post.rating++;
+        this.$store.dispatch('votePostUp',post)
+      },
+      votePostDown(post){
+        post.rating--;
+        this.$store.dispatch('votePostDown',post)
       }
     }
   }
