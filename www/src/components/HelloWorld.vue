@@ -24,6 +24,17 @@
       <button @click="showLogin=0">Logout</button>
       <h1>Hello, {{user.name}}</h1>
     </div>
+    <div>
+      <button v-if="showLogin==1" @click="postForm=1">Create Post</button>
+      <div v-if="postForm==1">
+        <form v-on:submit.prevent="addPost">
+          <input type="text" name="title" placeholder="title" v-model="post.title" required>
+          <input type="text" name="body" placeholder="body" v-model="post.body" required>
+          <input type="url" name="imgUrl" placeholder="Image url" v-model="post.imgUrl">
+          <button @click="postForm=0" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
     <div v-if="showLogin==1">
       <div class="post" v-for="post in posts">
         <img :src="post.imgUrl" alt="">
@@ -44,10 +55,18 @@
       return {
         showLogin: 0,
         sForm: 0,
-        activeUser: {},
+        postForm: 0,
         user: {
           name: ''
         },
+        post: {
+          title: '',
+          body: '',
+          imgUrl: '',
+          user: 0,
+          rating: 0,
+          parentId: 0
+        }
       }
     },
     mounted() {
@@ -65,6 +84,9 @@
       getUser() {
         // this.activeUser = this.user
         this.$store.dispatch('getUsers', this.user)
+      },
+      addPost() {
+        this.$store.dispatch('addPost', this.post)
       }
     }
   }

@@ -25,7 +25,7 @@ export default new vuex.Store({
   },
   actions:{
     getUsers({dispatch, commit}, user){
-      api.get('users/byname' + user)
+      api.get('users/byname/' + user)
       .then(res=>{
         console.log(res)
         commit('setUser', res.data)
