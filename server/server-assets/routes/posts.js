@@ -11,7 +11,7 @@ router.get('/api/posts', (req, res, next)=>{
             res.status(400).send(err)
         })
 })
-
+//get by id
 router.get('/api/posts/:id', (req, res, next)=>{
     Posts.findById(req.params.id)
     .then(posts=>{

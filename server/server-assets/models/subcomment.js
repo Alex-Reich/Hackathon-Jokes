@@ -20,6 +20,11 @@ var schema = new Schema({
     },
 
     // relationship
+    userId:{
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
     parentId: {
         type: ObjectId,
         ref: 'Comment',

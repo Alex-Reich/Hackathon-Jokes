@@ -14,7 +14,9 @@ export default new vuex.Store({
   state:{
     user:{},
     users: [],
-    posts:[]
+    posts:[],
+    comments: {},
+    subComments: {}
   },
   mutations:{
     setUser(state, user){
@@ -25,6 +27,15 @@ export default new vuex.Store({
     },
     setUsers(state,users){
       state.users=users
+    },
+    setComments(state, comments){
+      state.comments = comments
+    },
+    setSubComments(state, subComments){
+      state.subComments = subComments
+    },
+    logout(state){
+      state.user = {}
     }
   },
   actions:{
@@ -34,12 +45,18 @@ export default new vuex.Store({
         commit('setUsers', res.data)
       })
     },
+    logout({commit, dispatch}){
+      commit('logout')
+    },
 
     getUser({dispatch, commit}, user){
       api.post('users/byname/' + user.name)
       .then(res=>{
         //console.log(res)
         commit('setUser', res.data)
+      })
+      .catch(err=>{
+        alert(err)
       })
     },
     addUser({dispatch, commit}, user){
@@ -62,14 +79,64 @@ export default new vuex.Store({
       })
     },
     deletePost({dispatch, commit}, post){
-      console.log(post._id)
       api.delete('posts/'+post._id,post)
       .then (res=>{
         dispatch('getPosts')
       })
-    }
+    },
 
-
+    //COMMENTS
+    getComments({dispatch,  commit}){
+      api.get('comments')
+        .then(comments=>{
+          let commentObj={}
+          comments.data.forEach(com => {
+            if(!commentObj[com.parentId]){
+              commentObj[com.parentId] = []
+            }
+            commentObj[com.parentId].push(com)
+          })
+          commit('setComments', commentObj)
+        })
+    },
+    addComment({dispatch,commit}, comment){
+      api.post('comments', comment)
+        .then(res=>{
+          dispatch('getComments')
+        })
+    },
+    deleteComment({dispatch,commit},comment){
+      api.delete('comments/'+comment._id)
+        .then(res=>{
+          dispatch('getComments')
+        })
+    },
+    //SUBCOMMENTS
+    getSubComments({dispatch,  commit}){
+      api.get('subComments')
+        .then(subComments=>{
+          let subCommentObj={}
+          subComments.data.forEach(com => {
+            if(!subCommentObj[com.parentId]){
+              subCommentObj[com.parentId] = []
+            }
+            subCommentObj[com.parentId].push(com)
+          })
+          commit('setSubComments', subCommentObj)
+        })
+    },
+    addSubComment({dispatch,commit}, subComment){
+      api.post('subComments', subComment)
+        .then(res=>{
+          dispatch('getSubComments')
+        })
+    },
+    deleteSubComment({dispatch,commit},subComment){
+      api.delete('subComments/'+subComment._id)
+        .then(res=>{
+          dispatch('getSubComments')
+        })
+    },
 
   
   }

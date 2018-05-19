@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- The following is for the sign in sign up -->
-    <div class="login" v-if="showLogin==0">
+    <div class="login" v-if="!user._id">
       <button @click="sForm=1">Sign In</button>
       <button @click="sForm=2">Sign Up</button>
       <div v-if="sForm==1">
         <form v-on:submit.prevent="getUser">
           <input type="text" name="name" placeholder="Enter User Name" v-model="tuser.name">
-          <button @click="showLogin=1" type="submit">Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
       <div v-if="sForm==2">
@@ -20,12 +20,12 @@
     <!-- End of sign in sign up code -->
 
 
-    <div class="post" v-if="showLogin==1">
-      <button @click="showLogin=0">Logout</button>
+    <div class="post" v-else>
+      <button @click="logout">Logout</button>
       <h1>Hello, {{user.name}}</h1>
     </div>
     <div>
-      <button v-if="showLogin==1" @click="postForm=1">Create Post</button>
+      <button v-if="user._id" @click="postForm=1">Create Post</button>
       <div v-if="postForm==1">
         <form v-on:submit.prevent="addPost">
           <input type="text" name="title" placeholder="title" v-model="post.title" required>
@@ -35,22 +35,18 @@
         </form>
       </div>
     </div>
-    <div v-if="showLogin==1">
-      <div class="post" v-for="post in posts">
-        <img :src="post.imgUrl" alt="">
-        <h2>{{post.title}}</h2>
-        <p>{{post.body}}</p>
-        <p>Posted by {{post.user}}</p>
-        <button @click="deletePost(post)" type="delete">Delete</button>
-
-
-
+    <div v-if="user._id">
+      <div v-for="post in posts">
+        <post :post='post'></post>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
+  import Post from  "./post.vue"
+
   export default {
     name: 'HelloWorld',
     data() {
@@ -58,7 +54,6 @@
         showLogin: 0,
         sForm: 0,
         postForm: 0,
-        activeUser: {},
         tuser: {
           name: ''
         },
@@ -75,6 +70,8 @@
     mounted() {
       this.$store.dispatch('getPosts')
       this.$store.dispatch('getUsers')
+      this.$store.dispatch('getComments')
+      this.$store.dispatch('getSubComments')
     },
     computed: {
       posts() {
@@ -86,23 +83,22 @@
     },
     methods: {
       addUser() {
-        this.activeUser = this.tuser
         this.$store.dispatch('addUser', this.tuser)
       },
       getUser() {
-        this.activeUser = this.tuser
         this.$store.dispatch('getUser', this.tuser)
       },
       addPost() {
-        console.log(this.posts)
         this.post.user = this.user.name
         this.post.parentId = this.user._id
         this.$store.dispatch('addPost', this.post)
-       // this.$store.dispatch('getUser', this.tuser)
       },
-      deletePost(post){
-        this.$store.dispatch('deletePost', post)
+      logout(){
+        this.$store.dispatch('logout')
       }
+    },
+    components: {
+      Post
     }
   }
 </script>
