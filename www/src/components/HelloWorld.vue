@@ -6,13 +6,13 @@
       <button @click="sForm=2">Sign Up</button>
       <div v-if="sForm==1">
         <form v-on:submit.prevent="getUser">
-          <input type="text" name="name" placeholder="Enter User Name" v-model="user.name">
+          <input type="text" name="name" placeholder="Enter User Name" v-model="tuser.name">
           <button @click="showLogin=1" type="submit">Submit</button>
         </form>
       </div>
       <div v-if="sForm==2">
         <form v-on:submit.prevent="addUser">
-          <input type="text" name="name" placeholder="Select User Name" v-model="user.name">
+          <input type="text" name="name" placeholder="Select User Name" v-model="tuser.name">
           <button @click="showLogin=1" type="submit">Submit</button>
         </form>
       </div>
@@ -40,6 +40,8 @@
         <img :src="post.imgUrl" alt="">
         <h2>{{post.title}}</h2>
         <p>{{post.body}}</p>
+        <p>Posted by {{post.user}}</p>
+        <button @click="deletePost(post)" type="delete">Delete</button>
 
 
 
@@ -64,9 +66,9 @@
           title: '',
           body: '',
           imgUrl: '',
-          user: 0,
+          user: '',
           rating: 0,
-          parentId: 0
+          parentId: ''
         }
       }
     },
@@ -92,7 +94,14 @@
         this.$store.dispatch('getUser', this.tuser)
       },
       addPost() {
+        console.log(this.posts)
+        this.post.user = this.user.name
+        this.post.parentId = this.user._id
         this.$store.dispatch('addPost', this.post)
+       // this.$store.dispatch('getUser', this.tuser)
+      },
+      deletePost(post){
+        this.$store.dispatch('deletePost', post)
       }
     }
   }

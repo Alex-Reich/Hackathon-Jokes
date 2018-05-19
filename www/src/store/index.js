@@ -36,9 +36,9 @@ export default new vuex.Store({
     },
 
     getUser({dispatch, commit}, user){
-      api.get('users/byname/' + user)
+      api.post('users/byname/' + user.name)
       .then(res=>{
-        console.log(res)
+        //console.log(res)
         commit('setUser', res.data)
       })
     },
@@ -53,6 +53,19 @@ export default new vuex.Store({
       api.get('posts')
       .then(res=>{
         commit('setPosts', res.data)
+      })
+    },
+    addPost({dispatch, commit}, post){
+      api.post('posts', post)
+      .then(res=>{
+        dispatch('getPosts')
+      })
+    },
+    deletePost({dispatch, commit}, post){
+      console.log(post._id)
+      api.delete('posts/'+post._id,post)
+      .then (res=>{
+        dispatch('getPosts')
       })
     }
 

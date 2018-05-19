@@ -23,9 +23,9 @@ router.get('/api/users/:id', (req, res, next)=>{
 })
 
 router.post('/api/users/byname/:name', (req, res, next)=>{
-    Users.find({name: req.params.name})
-    .then(users=>{
-        res.status(200).send(users)
+    Users.findOne({name: req.params.name})
+    .then(user=>{
+        res.status(200).send(user)
     })
         .catch(err =>{
             res.status(400).send(err)
