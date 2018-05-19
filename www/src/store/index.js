@@ -12,7 +12,8 @@ vue.use(vuex)
 
 export default new vuex.Store({
   state:{
-    user:[],
+    user:{},
+    users: [],
     posts:[]
   },
   mutations:{
@@ -21,10 +22,20 @@ export default new vuex.Store({
     },
     setPosts(state, posts){
       state.posts = posts
+    },
+    setUsers(state,users){
+      state.users=users
     }
   },
   actions:{
-    getUsers({dispatch, commit}, user){
+    getUsers({dispatch, commit}){
+      api.get('users/')
+      .then(res=>{
+        commit('setUsers', res.data)
+      })
+    },
+
+    getUser({dispatch, commit}, user){
       api.get('users/byname/' + user)
       .then(res=>{
         console.log(res)
@@ -35,7 +46,7 @@ export default new vuex.Store({
       api.post('users', user)
       .then(res=>{
         dispatch('setUser',)
-        console.log('user added')
+        console.log('user added', res)
       })
     },
     getPosts({dispatch, commit}){
