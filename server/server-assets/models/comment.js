@@ -23,7 +23,7 @@ var schema = new Schema({
     parentId: {
         type: ObjectId,
         ref: 'Post',
-        //required: true
+        required: true
  
     }
 })
