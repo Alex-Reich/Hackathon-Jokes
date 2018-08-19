@@ -42,6 +42,9 @@
         <post :post='post'></post>
       </div>
     </div>
+    <div v-if="!user">
+      <h1>That account does not exist. Please sign up.</h1>
+    </div>
 
   </div>
 </template>
