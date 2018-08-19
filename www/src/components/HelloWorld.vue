@@ -2,6 +2,8 @@
   <div>
     <!-- The following is for the sign in sign up -->
     <div class="login" v-if="!user._id">
+      <h1>Welcome to Dad Joke Central</h1>
+      <h1>Please sign in to continue</h1>
       <button @click="sForm=1">Sign In</button>
       <button @click="sForm=2">Sign Up</button>
       <div v-if="sForm==1">
